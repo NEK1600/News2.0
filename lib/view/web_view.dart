@@ -14,8 +14,14 @@ class WebView extends StatelessWidget {
   Widget build(BuildContext context) {
     final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
     return ElevatedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF393939)),
+      style: ElevatedButton.styleFrom(
+        primary: Color(0xFF393939),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(0.0),
+            topLeft: Radius.circular(0.0),
+          ),
+        ),
       ),
       child: Text('Читать далее', style: TextStyle(fontSize: 24)),
       onPressed: () => {

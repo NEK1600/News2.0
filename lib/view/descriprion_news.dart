@@ -29,10 +29,12 @@ class DescriptNews extends State<DescNews> {
     final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
     arguments['exampleArgument'].toString();
     return Scaffold(
-        appBar: AppBar(
-          title: Center(child:Text('Фильтр Слово')),
-          backgroundColor: Color(0xFF393939),
-        ),
+        appBar:PreferredSize(
+          preferredSize: Size.fromHeight(0),
+          child: AppBar(
+            title: Center(child: Text('Фильтр Слово')),
+            backgroundColor: Color(0xFF393939),
+          ),) ,
         body:DescriptWidget(futureAlbum:futureAlbum),
     );
     debugPrint('movieTitle:gh');
