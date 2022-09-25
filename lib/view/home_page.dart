@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:news2_0/data/model/well.dart';
 import 'package:news2_0/data/remote/api_client.dart';
 import 'package:news2_0/view/descriprion_news.dart';
-import 'package:news2_0/view/open_panel.dart';
 import 'card_new.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -14,12 +13,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<Well> futureAlbum;
+  late Future<Well> futureAlbum2;
   final _wordException = TextEditingController();
   final category = TextEditingController();
 
   @override
   void initState() {
-    futureAlbum = ApiClient().fetchAlbum();
+    futureAlbum2 = ApiClient().fetchAlbumTwo("");
+    //futureAlbum2 = ApiClient().fetchAlbumTwo(_wordException);
     super.initState();
   }
 
@@ -70,6 +71,14 @@ class _HomePageState extends State<HomePage> {
                                   fillColor: Color(0xFF202020),
                                   hintText: 'ключевое слово'
                                 ),
+                                onChanged: (str)async {
+                                  /*str = _wordException.text;
+                                  futureAlbum2 = ApiClient().fetchAlbumTwo(str);*/
+                                  setState(() {
+                                    str = _wordException.text;
+                                    futureAlbum2 = ApiClient().fetchAlbumTwo(str);
+                                  });
+                                },
                               ),
                             ),
                           ])
@@ -77,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   flex: 10,
                   child: FutureBuilder<Well>(
-                    future: futureAlbum,
+                    future: futureAlbum2,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return ListView.builder(
