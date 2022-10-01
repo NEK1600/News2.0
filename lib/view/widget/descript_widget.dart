@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news2_0/data/model/well.dart';
 import 'package:news2_0/data/remote/api_client.dart';
-import 'package:news2_0/view/web_view.dart';
+import 'package:news2_0/view/widget/web_view.dart';
 
 
 
@@ -13,6 +13,7 @@ class DescriptWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
     return Column(
       children:<Widget>[
@@ -55,10 +56,9 @@ class DescriptWidget extends StatelessWidget {
               },
             )
         ),
-        Flexible(
-          child:
-          Container(
-              height: 500,
+        Expanded(
+          child: Container(
+              height: 600,
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.only(bottom:10),
               color: Color(0xFF393939),
@@ -75,13 +75,14 @@ class DescriptWidget extends StatelessWidget {
           ) ,
         ),
         Align(
-            alignment: Alignment.bottomCenter,
-            child:SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: WebView(futureAlbum: futureAlbum,),
-            )
-        ),
+              alignment: FractionalOffset.bottomCenter,
+              child:Container(
+                width: double.infinity,
+                height: 50,
+                child: WebView(futureAlbum: futureAlbum,),
+              )
+          ),
+
 
       ],
     );

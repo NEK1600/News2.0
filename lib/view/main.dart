@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news2_0/view/descriprion_news.dart';
-import 'home_page.dart';
+import 'package:news2_0/data/remote/repository.dart';
+import 'package:news2_0/view/page/descriprion_news.dart';
+import 'page/home_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   //runApp(const MyApp());
@@ -26,7 +28,10 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           primaryColor: Colors.white,
         ),
-        home:HomePage(),
+        home:RepositoryProvider(
+          create: (context) => Repository(),
+          child: HomePage(),
+        )
     );
   }
 }

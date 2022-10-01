@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news2_0/data/model/well.dart';
 import 'package:news2_0/data/remote/api_client.dart';
 import 'package:flutter/foundation.dart';
-import 'package:news2_0/view/descript_widget.dart';
+import 'package:news2_0/view/widget/descript_widget.dart';
 
 
 class DescNews extends StatefulWidget {
