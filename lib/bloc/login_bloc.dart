@@ -19,6 +19,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       try {
         emit(NewsLoadingInitial());
         final loadedUserList = await newsRepository.getNewsRepositoryTwo("");
+        print("проверка newsLoadingInitial ${loadedUserList}");
         emit(NewsLoadedInitial(loadedUserList));
       } catch (e) {
         emit(NewsErrorInitial());

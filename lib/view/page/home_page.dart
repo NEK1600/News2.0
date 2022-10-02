@@ -44,13 +44,11 @@ class _HomePageState extends State<HomePage> {
             //create: (context) => LoginBloc(newsRepository, qWord),
               create: (context) => LoginBloc()
                 ..add(OutputNewsEvent()),
-              child: BlocBuilder<LoginBloc,LoginState>(
-                  builder: (context, state) {
-                    return FilterListWidget(
+              child: FilterListWidget(
                       futureAlbum2: futureAlbum2,
                       wordException: _wordException,
-                    );
-                  }));
+                    )
+            );
           }
         )
       );
