@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news2_0/data/model/well.dart';
 import 'package:news2_0/data/remote/api_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:news2_0/view/widget/descript_widget.dart';
+
+import '../../bloc/login_bloc.dart';
 
 
 class DescNews extends StatefulWidget {
@@ -35,9 +38,16 @@ class DescriptNews extends State<DescNews> {
             title: Center(child: Text('Фильтр Слово')),
             backgroundColor: Color(0xFF393939),
           ),) ,
-        body:DescriptWidget(futureAlbum:futureAlbum),
+        body:Builder(builder: (BuildContext context) {
+          return BlocProvider<LoginBloc>(
+            //create: (context) => LoginBloc(newsRepository, qWord),
+              create: (context) => LoginBloc()
+                ..add(OutputNewsEvent()),
+              child:  DescriptWidget(futureAlbum:futureAlbum),
+          );
+        }
+      )
     );
-    debugPrint('movieTitle:gh');
   }
 
 

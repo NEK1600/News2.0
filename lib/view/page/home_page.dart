@@ -37,9 +37,7 @@ class _HomePageState extends State<HomePage> {
             //create: (context) => LoginBloc(newsRepository, qWord),
               create: (context) => LoginBloc()
                 ..add(OutputNewsEvent()),
-              child: FilterListWidget(
-                      futureAlbum2: futureAlbum2,
-                    )
+              child: FilterListWidget()
             );
           }
         )

@@ -7,11 +7,8 @@ import 'package:news2_0/data/remote/repository.dart';
 import 'package:news2_0/view/widget/card_new.dart';
 
 class FilterListWidget extends StatefulWidget {
-  late Future<Well> futureAlbum2;
   FilterListWidget({
-    Key? key,
-    required this.futureAlbum2,
-  }) : super(key: key);
+    Key? key,}) : super(key: key);
   @override
   FilterList createState() => FilterList();
 }
@@ -54,52 +51,44 @@ class FilterList extends State<FilterListWidget> {
                         children: <Widget>[
                           Expanded(
                             child: BlocBuilder<LoginBloc, LoginState>(
-                                  builder: (context, state) {
-                                    if(state is NewsInitial){
-                                      print("нет данных");
-                                      return Center(child: Text("Нет Данных"),);
-                                    }if(state is NewsLoadingInitial){
-                                      print("данные загружаются");
-                                      return  Center(child:CircularProgressIndicator());
-                                    }if(state is NewsLoadedInitial){
-                                      return TextFormField(
-                                        controller: _wordException,
-                                        style: TextStyle(color: Colors.white),
-                                        decoration: const InputDecoration(
-                                            hintStyle: TextStyle(
-                                                fontSize: 17, color: Color(0xFF7D7D7D)),
-                                            filled: true,
-                                            fillColor: Color(0xFF202020),
-                                            hintText: 'ключевое слово'),
-                                             //onChanged: (_) => BlocProvider.of<LoginBloc>(context).add(SearchNewsEvent(_wordException.text)),
-                                            onFieldSubmitted: (price) {
-                                              BlocProvider.of<LoginBloc>(context).add(SearchNewsEvent(_wordException.text));
-
-                                            },
-                                      );
-                                    }if(state is NewsErrorInitial){
-                                      return Center(child: Text("ошибка"),);
-                                    }
-                                    print("другое дважды");
-                                    return CircularProgressIndicator();
+                                builder: (context, state) {
+                                  if(state is NewsInitial){
+                                    return Center(child: Text("Нет Данных"),);
+                                  }if(state is NewsLoadingInitial){
+                                    return  Center(child:CircularProgressIndicator());
+                                  }if(state is NewsLoadedInitial){
+                                    return TextFormField(
+                                      controller: _wordException,
+                                      style: TextStyle(color: Colors.white),
+                                      decoration: const InputDecoration(
+                                        hintStyle: TextStyle(fontSize: 17, color: Color(0xFF7D7D7D)),
+                                        filled: true, fillColor: Color(0xFF202020), hintText: 'ключевое слово'),
+                                         //onChanged: (_) => BlocProvider.of<LoginBloc>(context).add(SearchNewsEvent(_wordException.text)),
+                                        onFieldSubmitted: (price) {
+                                          BlocProvider.of<LoginBloc>(context).add(SearchNewsEvent(_wordException.text));
+                                          },
+                                    );
+                                  }if(state is NewsErrorInitial){
+                                    return Center(child: Text("ошибка"),);
+                                  }
+                                  return CircularProgressIndicator();
 
                               }),
 
                           ),
                         ])
                   ])),
+
+
           Expanded(
             flex: 10,
             child: BlocBuilder<LoginBloc, LoginState>(
                 builder: (context, state) {
                      if(state is NewsInitial){
-                       print("нет данных");
                        return Center(child: Text("Нет Данных"),);
                      }if(state is NewsLoadingInitial){
-                       print("данные загружаются");
                        return Center(child:CircularProgressIndicator());
                      }if(state is NewsLoadedInitial){
-                       print("Данные загружены");
                        return ListView.builder(
                          itemCount: state.well.articles?.length,
                          itemBuilder: (context, index) => GestureDetector(
@@ -113,7 +102,6 @@ class FilterList extends State<FilterListWidget> {
                      }if(state is NewsErrorInitial){
                         return Center(child: Text("ошибка"),);
                      }
-                     print("другое дважды");
                      return CircularProgressIndicator();
               }
             ),
@@ -122,23 +110,3 @@ class FilterList extends State<FilterListWidget> {
   }
 }
 
-
-
-
-
-
-
-/*if (snapshot.hasData) {
-    return ListView.builder(
-      itemCount: snapshot.data?.articles?.length,
-      itemBuilder: (context, index) => GestureDetector(
-      child: CardNew(
-        title: snapshot.data!.articles![index].title!,),
-      onTap: () {
-        Navigator.pushNamed(context, '/description',
-        arguments: {'exampleArgument': index});
-      },),
-    );
-    } else if (snapshot.hasError) {
-    return Text('${snapshot.error}');
-}*/

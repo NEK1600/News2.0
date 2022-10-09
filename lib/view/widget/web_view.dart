@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 
 class WebView extends StatelessWidget {
-  final Future<Well> futureAlbum;
+  final String futureAlbum;
   WebView({
     required this.futureAlbum,
   });
@@ -24,11 +24,7 @@ class WebView extends StatelessWidget {
         ),
       ),
       child: Text('Читать далее', style: TextStyle(fontSize: 24)),
-      onPressed: () => {
-        futureAlbum.then((result) =>
-            _launchURL(result.articles![arguments['exampleArgument']].url!)
-        ),
-      },
+      onPressed: () => {_launchURL(futureAlbum)},
     );
   }
 
