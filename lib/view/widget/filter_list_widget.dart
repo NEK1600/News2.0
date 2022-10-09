@@ -8,11 +8,9 @@ import 'package:news2_0/view/widget/card_new.dart';
 
 class FilterListWidget extends StatefulWidget {
   late Future<Well> futureAlbum2;
-  final wordException;
   FilterListWidget({
     Key? key,
     required this.futureAlbum2,
-    required this.wordException,
   }) : super(key: key);
   @override
   FilterList createState() => FilterList();
@@ -22,10 +20,16 @@ class FilterList extends State<FilterListWidget> {
   final newsRepository = Repository();
   final String qWord = "";
   final LoginBloc loginBloc = LoginBloc();
+  final _wordException = TextEditingController();
   @override
   void initState() {
     loginBloc.add(OutputNewsEvent());
     super.initState();
+  }
+  @override
+  void dispose() {
+    _wordException.dispose();
+    super.dispose();
   }
 
   @override
@@ -42,34 +46,45 @@ class FilterList extends State<FilterListWidget> {
                   title: const Center(
                       child: Text(
                     "Фильтр слово",
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                    style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.white),
                   )),
                   children: <Widget>[
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Expanded(
-                            child: TextField(
-                              controller: widget.wordException,
-                              style: TextStyle(color: Colors.white),
-                              decoration: const InputDecoration(
-                                  hintStyle: TextStyle(
-                                      fontSize: 17, color: Color(0xFF7D7D7D)),
-                                  filled: true,
-                                  fillColor: Color(0xFF202020),
-                                  hintText: 'ключевое слово'),
-                              onChanged: (str) async {
-                                setState(() {
-                                  str = widget.wordException.text;
-                                  widget.futureAlbum2 =
-                                      ApiClient().fetchAlbumTwo(str);
-                                    //loginBloc.add()
-                                });
-                              },
-                            ),
+                            child: BlocBuilder<LoginBloc, LoginState>(
+                                  builder: (context, state) {
+                                    if(state is NewsInitial){
+                                      print("нет данных");
+                                      return Center(child: Text("Нет Данных"),);
+                                    }if(state is NewsLoadingInitial){
+                                      print("данные загружаются");
+                                      return  Center(child:CircularProgressIndicator());
+                                    }if(state is NewsLoadedInitial){
+                                      return TextFormField(
+                                        controller: _wordException,
+                                        style: TextStyle(color: Colors.white),
+                                        decoration: const InputDecoration(
+                                            hintStyle: TextStyle(
+                                                fontSize: 17, color: Color(0xFF7D7D7D)),
+                                            filled: true,
+                                            fillColor: Color(0xFF202020),
+                                            hintText: 'ключевое слово'),
+                                             //onChanged: (_) => BlocProvider.of<LoginBloc>(context).add(SearchNewsEvent(_wordException.text)),
+                                            onFieldSubmitted: (price) {
+                                              BlocProvider.of<LoginBloc>(context).add(SearchNewsEvent(_wordException.text));
+
+                                            },
+                                      );
+                                    }if(state is NewsErrorInitial){
+                                      return Center(child: Text("ошибка"),);
+                                    }
+                                    print("другое дважды");
+                                    return CircularProgressIndicator();
+
+                              }),
+
                           ),
                         ])
                   ])),

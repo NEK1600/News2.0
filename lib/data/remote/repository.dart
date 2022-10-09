@@ -9,7 +9,7 @@ class Repository {
   }
 
   Future<Well> getNewsRepositoryTwo(String qWord) async {
-    return /*await*/ _clientProvider.fetchAlbumTwo(qWord);
+    return await _clientProvider.fetchAlbumTwo(qWord);
   }
 
 }

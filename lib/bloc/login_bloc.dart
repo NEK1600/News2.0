@@ -26,6 +26,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
 
     });
+    on<SearchNewsEvent>((event, emit) async{
+      try {
+        emit(NewsLoadingInitial());
+        final loadedUserList = await newsRepository.getNewsRepositoryTwo(event.qWord);
+        print("проверка newsLoadingInitial ${loadedUserList}");
+        emit(NewsLoadedInitial(loadedUserList));
+      } catch (e) {
+        emit(NewsErrorInitial());
+      }
+
+    });
+
   }
 
 

@@ -15,18 +15,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<Well> futureAlbum2;
-  final _wordException = TextEditingController();
 
   @override
   void initState() {
     futureAlbum2 = ApiClient().fetchAlbumTwo("");
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _wordException.dispose();
-    super.dispose();
   }
 
   @override
@@ -46,7 +39,6 @@ class _HomePageState extends State<HomePage> {
                 ..add(OutputNewsEvent()),
               child: FilterListWidget(
                       futureAlbum2: futureAlbum2,
-                      wordException: _wordException,
                     )
             );
           }
