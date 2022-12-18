@@ -12,7 +12,6 @@ class WebView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: Color(0xFF393939),
